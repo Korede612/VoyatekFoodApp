@@ -27,9 +27,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         
-        //        viewModel.fetchFood()
+        
+        viewModel.fetchFood()
         viewModel.fetchFoodCategories()
         setupUI()
+        setNavigationAndTabBar(hidden: true)
+        addButton.isEnabled = false
     }
     
     func setupUI() {
@@ -47,8 +50,8 @@ class ViewController: UIViewController {
     
     func dismissKeyboardTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-            tapGesture.cancelsTouchesInView = false // Ensures other touch events still work
-            view.addGestureRecognizer(tapGesture)
+        tapGesture.cancelsTouchesInView = false // Ensures other touch events still work
+        view.addGestureRecognizer(tapGesture)
     }
     
     @objc private func dismissKeyboard() {
@@ -83,14 +86,27 @@ class ViewController: UIViewController {
             }
             .store(in: &cancellables) // Store the subscription
         
+        viewModel.$filteredFoods
+            .receive(on: RunLoop.main).sink { [weak self] foodItem in
+                guard let self else { return }
+                foodContentView.reloadData()
+            }.store(in: &cancellables)
+        
         viewModel.$categories.sink { [weak self] cat in
             guard let self else { return }
             var option: [OptionData] = [
                 Option(title: "All")
             ]
-            option.append(contentsOf: cat.map({Option(title: $0.name)})) 
+            option.append(contentsOf: cat.map({Option(title: $0.name)}))
             foodCategory.viewModel?.options = option
             foodCategory.viewModel?.handleSelection(at: 0)
+            addButton.isEnabled = true
+        }.store(in: &cancellables)
+        
+        foodCategory.$selectedIndex.receive(on: RunLoop.main).sink { [weak self] selectedIndex in
+            guard let self else { return }
+            viewModel.filterTableView(categoryIndex: selectedIndex)
+            foodContentView.reloadData()
         }.store(in: &cancellables)
     }
     
@@ -124,7 +140,11 @@ class ViewController: UIViewController {
             leading: foodCategory.leadingAnchor,
             paddingTop: 16
         )
-        foodContentView.backgroundColor = .green
+        
+        foodContentView.delegate = self
+        foodContentView.dataSource = self
+        
+        foodContentView.register(FoodItemCell.self, forCellReuseIdentifier: FoodItemCell.reseuseIdentifier)
     }
     
     func layoutAddButton() {
@@ -139,6 +159,8 @@ class ViewController: UIViewController {
         addButton.cornerRadius = 25
         addButton.setImage(UIImage(systemName: "plus"), for: .normal)
         addButton.backgroundColor = .unSelected
+        
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     }
     
     private func handleButtonTap() {
@@ -146,6 +168,49 @@ class ViewController: UIViewController {
         _ = showAlert(title: "Notification", message: "This is not available at the moment", positive: "Ok")
     }
     
+    @objc private func addButtonTapped(_ button: UIButton) {
+        let vc = AddFoodViewController()
+        vc.viewModel = viewModel
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
+    // Helper to toggle visibility of navigation and tab bars
+    func setNavigationAndTabBar(hidden: Bool) {
+        //        self.navigationController?.navigationBar.isHidden = hidden
+        self.navigationController?.setNavigationBarHidden(hidden, animated: true)
+    }
+    
+    
+}
+
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.filteredFoods.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodItemCell.reseuseIdentifier) as? FoodItemCell else {
+            return UITableViewCell()
+        }
+        cell.confire(with: viewModel.filteredFoods[indexPath.row])
+        return cell
+    }
+    
+    
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.getFoodTitle()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 277
+
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 

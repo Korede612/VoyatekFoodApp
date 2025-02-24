@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		728D2FAA2D6C2F67001DDB68 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 728D2FA92D6C2F67001DDB68 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		728D2F642D6BAB59001DDB68 /* VoyatekFoodApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoyatekFoodApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -14,6 +18,7 @@
 		728D2F762D6BAB59001DDB68 /* Exceptions for "VoyatekFoodApp" folder in "VoyatekFoodApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Components/SwiftUIComponents/Untitled.swift,
 				Info.plist,
 			);
 			target = 728D2F632D6BAB59001DDB68 /* VoyatekFoodApp */;
@@ -36,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				728D2FAA2D6C2F67001DDB68 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +84,7 @@
 			);
 			name = VoyatekFoodApp;
 			packageProductDependencies = (
+				728D2FA92D6C2F67001DDB68 /* Kingfisher */,
 			);
 			productName = VoyatekFoodApp;
 			productReference = 728D2F642D6BAB59001DDB68 /* VoyatekFoodApp.app */;
@@ -107,6 +114,9 @@
 			);
 			mainGroup = 728D2F5B2D6BAB59001DDB68;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				728D2FA82D6C2F67001DDB68 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 728D2F652D6BAB59001DDB68 /* Products */;
 			projectDirPath = "";
@@ -335,6 +345,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		728D2FA82D6C2F67001DDB68 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		728D2FA92D6C2F67001DDB68 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 728D2FA82D6C2F67001DDB68 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 728D2F5C2D6BAB59001DDB68 /* Project object */;
 }
