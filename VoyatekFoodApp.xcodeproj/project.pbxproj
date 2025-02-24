@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		728D2FAA2D6C2F67001DDB68 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 728D2FA92D6C2F67001DDB68 /* Kingfisher */; };
+		728D2FCA2D6C796F001DDB68 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 728D2FC92D6C7965001DDB68 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		728D2F642D6BAB59001DDB68 /* VoyatekFoodApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoyatekFoodApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		728D2FC92D6C7965001DDB68 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -51,6 +53,7 @@
 		728D2F5B2D6BAB59001DDB68 = {
 			isa = PBXGroup;
 			children = (
+				728D2FC92D6C7965001DDB68 /* README.md */,
 				728D2F662D6BAB59001DDB68 /* VoyatekFoodApp */,
 				728D2F652D6BAB59001DDB68 /* Products */,
 			);
@@ -132,6 +135,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				728D2FCA2D6C796F001DDB68 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
