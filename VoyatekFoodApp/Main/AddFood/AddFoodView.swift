@@ -75,8 +75,8 @@ struct AddFoodView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 52)
                     .cornerRadius(4)
-                    .background(!isFormValid ? Color.border : Color.blue)
-                    .tint(!isFormValid ? Color.greyText : Color.white)
+                    .background(!isFormValid ? Color.disabledButton : Color.selectedBlue)
+                    .tint(!isFormValid ? Color.disabledButtonText : Color.white)
                     
             })
             .disabled(!isFormValid)
